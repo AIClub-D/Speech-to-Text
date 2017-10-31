@@ -4,11 +4,13 @@ import os, sys
 import urllib.request
 import urllib.parse
 import requests
+import NaverTTS
 
 s = "효원"
 voice_recognize_flag = 0
-URL = 'http://192.168.0.103:8000/'  # django server url
+URL = 'http://192.168.0.101:8000/'  # django server url
 name = s.encode('utf-8')
+tts = NaverTTS.NaverTTS(1, 0)
 
 while 1:
     # stt.sh 파일을 실행
@@ -39,6 +41,8 @@ while 1:
             res = client.post(URL, data=value, headers=headers)
 
         result = res.content.decode('utf-8')
+        tts.play(result)
         print(result)
         voice_recognize_flag = 0
+        f.close()
 
